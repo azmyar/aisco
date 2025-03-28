@@ -1,4 +1,4 @@
-module aisco.product.relawandermawan {
+module aisco.product.hobiberbagi {
     requires aisco.program.core;
     requires aisco.program.activity;
     requires aisco.program.operational;

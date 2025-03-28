@@ -1,4 +1,4 @@
-package aisco.product.relawandermawan;
+package aisco.product.hobibergabi;
 
 import aisco.program.ProgramFactory;
 import aisco.program.core.Program;
@@ -12,14 +12,14 @@ import aisco.donation.core.Donation;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RelawanDermawan {
+public class HobiBerbagi {
     private static Program activityProgram;
     private static Program operationalProgram;
     private static FinancialReport financialreportFinancialReport;
     private static FinancialReport incomeFinancialReport;
     private static FinancialReport expenseFinancialReport;
     private static Donation donationDonation;
-    private static Donation bankTransferDonation;
+    private static Donation virtualAccountDonation;
     
     private static List<FinancialReport> incomeRecords = new ArrayList<>();
     private static List<FinancialReport> expenseRecords = new ArrayList<>();
@@ -29,24 +29,24 @@ public class RelawanDermawan {
         initializeFinancialReports();
         initializeDonations();
         
-        System.out.println("=== RelawanDermawan Donation Platform ===");
-        System.out.println("Running with Bank Transfer Payment Gateway");
+        System.out.println("=== HobiBerbagi Donation Platform ===");
+        System.out.println("Running with Virtual Account Payment Gateway");
         
         System.out.println("\n=== Available Programs ===");
         displayPrograms();
         
         System.out.println("\n=== Processing Donations ===");
-        processBankTransferDonations();
+        processVirtualAccountDonations();
         
         System.out.println("\n=== Financial Reports ===");
         generateFinancialReports();
     }
     
     private static void initializePrograms() {
-        Object[] programParams = new Object[]{"Activity Program", "Education"};
+        Object[] programParams = new Object[]{"Activity Program", "Community Service"};
         activityProgram = ProgramFactory.createProgram("Activity", programParams);
         
-        programParams = new Object[]{"Operational Program", "Office"};
+        programParams = new Object[]{"Operational Program", "Administration"};
         operationalProgram = ProgramFactory.createProgram("Operational", programParams);
     }
     
@@ -55,7 +55,7 @@ public class RelawanDermawan {
         
         financialreportFinancialReport = baseReport;
         
-        incomeFinancialReport = new aisco.financialreport.income.FinancialReportImpl(baseReport, "Bank Transfer");
+        incomeFinancialReport = new aisco.financialreport.income.FinancialReportImpl(baseReport, "Virtual Account");
         
         expenseFinancialReport = new aisco.financialreport.expense.FinancialReportImpl(baseReport);
         
@@ -63,27 +63,26 @@ public class RelawanDermawan {
     }
     
     private static void populateSampleFinancialData() {
-        incomeRecords.add(new FinancialReportImpl("INC001", "2025-03-28", 1000000, "Donation from Rudi", activityProgram, "INC-001"));
-        incomeRecords.add(new FinancialReportImpl("INC002", "2025-03-28", 850000, "Donation from Siti", operationalProgram, "INC-002"));
+        incomeRecords.add(new FinancialReportImpl("INC001", "2025-03-28", 600000, "Donation from Deni", activityProgram, "INC-001"));
+        incomeRecords.add(new FinancialReportImpl("INC002", "2025-03-28", 750000, "Donation from Maya", operationalProgram, "INC-002"));
         
-        expenseRecords.add(new FinancialReportImpl("EXP001", "2025-03-28", 200000, "Office Supplies", operationalProgram, "EXP-001"));
-        expenseRecords.add(new FinancialReportImpl("EXP002", "2025-03-28", 350000, "Program Materials", activityProgram, "EXP-002"));
+        expenseRecords.add(new FinancialReportImpl("EXP001", "2025-03-28", 250000, "Office Supplies", operationalProgram, "EXP-001"));
+        expenseRecords.add(new FinancialReportImpl("EXP002", "2025-03-28", 400000, "Program Materials", activityProgram, "EXP-002"));
     }
     
     private static void initializeDonations() {
         Object[] donationParams = new Object[]{"General Donation", 0};
         donationDonation = DonationFactory.createDonation("General", donationParams);
         
-        Object[] bankTransferParams = new Object[]{
-            "Rudi", 
-            "rudi@mail.com", 
+        Object[] virtualAccountParams = new Object[]{
+            "Deni", 
+            "deni@mail.com", 
             "081234567890", 
-            1000000, 
-            "BCA", 
-            "1234567890", 
-            "Rudi Hartono"
+            600000, 
+            "BNI", 
+            "8888123456789"
         };
-        bankTransferDonation = DonationFactory.createDonation("TransferBank", bankTransferParams);
+        virtualAccountDonation = DonationFactory.createDonation("VirtualAccount", virtualAccountParams);
     }
     
     private static void displayPrograms() {
@@ -96,21 +95,20 @@ public class RelawanDermawan {
         }
     }
     
-    private static void processBankTransferDonations() {
-        if (bankTransferDonation != null) {
-            System.out.println("Bank Transfer Donations:");
-            System.out.println(bankTransferDonation.toString());
+    private static void processVirtualAccountDonations() {
+        if (virtualAccountDonation != null) {
+            System.out.println("Virtual Account Donations:");
+            System.out.println(virtualAccountDonation.toString());
             
             Object[] customDonationParams = new Object[]{
-                "Andi", 
-                "andi@mail.com", 
+                "Budi", 
+                "budi@mail.com", 
                 "087654321098", 
-                1500000, 
-                "Mandiri", 
-                "9876543210", 
-                "Andi Wijaya"
+                800000, 
+                "BCA", 
+                "9999987654321"
             };
-            Donation customDonation = DonationFactory.createDonation("TransferBank", customDonationParams);
+            Donation customDonation = DonationFactory.createDonation("VirtualAccount", customDonationParams);
             
             System.out.println("\nAdding custom donation:");
             System.out.println(customDonation.toString());
@@ -118,22 +116,21 @@ public class RelawanDermawan {
             incomeRecords.add(new FinancialReportImpl(
                 "INC003", 
                 "2025-03-28", 
-                1500000, 
-                "Bank Transfer Donation from Andi", 
+                800000, 
+                "Virtual Account Donation from Budi", 
                 activityProgram, 
                 "INC-003"
             ));
             
             Object[] anotherDonationParams = new Object[]{
-                "Lina", 
-                "lina@mail.com", 
+                "Sinta", 
+                "sinta@mail.com", 
                 "089876543210", 
-                750000, 
-                "BNI", 
-                "5432109876", 
-                "Lina Susanti"
+                500000, 
+                "Mandiri", 
+                "7777123456789"
             };
-            Donation anotherDonation = DonationFactory.createDonation("TransferBank", anotherDonationParams);
+            Donation anotherDonation = DonationFactory.createDonation("VirtualAccount", anotherDonationParams);
             
             System.out.println("\nAdding another donation:");
             System.out.println(anotherDonation.toString());
@@ -141,13 +138,35 @@ public class RelawanDermawan {
             incomeRecords.add(new FinancialReportImpl(
                 "INC004", 
                 "2025-03-28", 
-                750000, 
-                "Bank Transfer Donation from Lina", 
+                500000, 
+                "Virtual Account Donation from Sinta", 
                 operationalProgram, 
                 "INC-004"
             ));
+            
+            Object[] thirdDonationParams = new Object[]{
+                "Reza", 
+                "reza@mail.com", 
+                "081122334455", 
+                1000000, 
+                "BRI", 
+                "6666987654321"
+            };
+            Donation thirdDonation = DonationFactory.createDonation("VirtualAccount", thirdDonationParams);
+            
+            System.out.println("\nAdding third donation:");
+            System.out.println(thirdDonation.toString());
+            
+            incomeRecords.add(new FinancialReportImpl(
+                "INC005", 
+                "2025-03-28", 
+                1000000, 
+                "Virtual Account Donation from Reza", 
+                activityProgram, 
+                "INC-005"
+            ));
         } else {
-            System.out.println("Bank Transfer payment gateway not properly initialized.");
+            System.out.println("Virtual Account payment gateway not properly initialized.");
         }
     }
     
