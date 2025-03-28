@@ -16,5 +16,9 @@ features
 			Donation {abstract true}
 				alternative
 					DirectPayment
-					PaymentGateway
-
+					PaymentGateway {abstract true}
+						alternative
+							Ewallet
+							VirtualAccount
+							TransferBank
+							KartuKredit

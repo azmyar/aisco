@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<configuration>
+	<feature automatic="selected" name="AISCO"/>
+	<feature automatic="selected" name="Program"/>
+	<feature manual="selected" name="Activity"/>
+	<feature manual="selected" name="Operational"/>
+	<feature automatic="selected" name="FinancialReport"/>
+	<feature automatic="selected" name="Income"/>
+	<feature manual="selected" name="Expense"/>
+	<feature automatic="selected" manual="selected" name="Donation"/>
+	<feature automatic="unselected" name="DirectPayment"/>
+	<feature automatic="selected" name="PaymentGateway"/>
+	<feature manual="selected" name="Ewallet"/>
+	<feature automatic="unselected" name="VirtualAccount"/>
+	<feature automatic="unselected" name="TransferBank"/>
+	<feature automatic="unselected" name="KartuKredit"/>
+</configuration>
