@@ -1,4 +1,4 @@
-package aisco.product.mampubantu;
+package aisco.product.relawandermawan;
 
 import aisco.program.ProgramFactory;
 import aisco.program.core.Program;
@@ -12,14 +12,14 @@ import aisco.donation.core.Donation;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MampuBantu {
+public class RelawanDermawan {
     private static Program activityProgram;
     private static Program operationalProgram;
     private static FinancialReport financialreportFinancialReport;
     private static FinancialReport incomeFinancialReport;
     private static FinancialReport expenseFinancialReport;
     private static Donation donationDonation;
-    private static Donation pgatewayDonation;
+    private static Donation bankTransferDonation;
     
     private static List<FinancialReport> incomeRecords = new ArrayList<>();
     private static List<FinancialReport> expenseRecords = new ArrayList<>();
@@ -29,14 +29,14 @@ public class MampuBantu {
         initializeFinancialReports();
         initializeDonations();
         
-        System.out.println("=== MampuBantu Donation Platform ===");
-        System.out.println("Running with E-Wallet Payment Gateway");
+        System.out.println("=== RelawanDermawan Donation Platform ===");
+        System.out.println("Running with Bank Transfer Payment Gateway");
         
         System.out.println("\n=== Available Programs ===");
         displayPrograms();
         
         System.out.println("\n=== Processing Donations ===");
-        processEWalletDonations();
+        processBankTransferDonations();
         
         System.out.println("\n=== Financial Reports ===");
         generateFinancialReports();
@@ -55,7 +55,7 @@ public class MampuBantu {
         
         financialreportFinancialReport = baseReport;
         
-        incomeFinancialReport = new aisco.financialreport.income.FinancialReportImpl(baseReport, "E-Wallet");
+        incomeFinancialReport = new aisco.financialreport.income.FinancialReportImpl(baseReport, "Bank Transfer");
         
         expenseFinancialReport = new aisco.financialreport.expense.FinancialReportImpl(baseReport);
         
@@ -63,8 +63,8 @@ public class MampuBantu {
     }
     
     private static void populateSampleFinancialData() {
-        incomeRecords.add(new FinancialReportImpl("INC001", "2025-03-28", 500000, "Donation from Budi", activityProgram, "INC-001"));
-        incomeRecords.add(new FinancialReportImpl("INC002", "2025-03-28", 300000, "Donation from Ani", operationalProgram, "INC-002"));
+        incomeRecords.add(new FinancialReportImpl("INC001", "2025-03-28", 1000000, "Donation from Rudi", activityProgram, "INC-001"));
+        incomeRecords.add(new FinancialReportImpl("INC002", "2025-03-28", 850000, "Donation from Siti", operationalProgram, "INC-002"));
         
         expenseRecords.add(new FinancialReportImpl("EXP001", "2025-03-28", 200000, "Office Supplies", operationalProgram, "EXP-001"));
         expenseRecords.add(new FinancialReportImpl("EXP002", "2025-03-28", 350000, "Program Materials", activityProgram, "EXP-002"));
@@ -74,15 +74,16 @@ public class MampuBantu {
         Object[] donationParams = new Object[]{"General Donation", 0};
         donationDonation = DonationFactory.createDonation("General", donationParams);
         
-        Object[] ewalletParams = new Object[]{
-            "Dewi", 
-            "dewi@mail.com", 
-            "081122334455", 
-            500000, 
-            "DANA", 
-            "081122334455"
+        Object[] bankTransferParams = new Object[]{
+            "Rudi", 
+            "rudi@mail.com", 
+            "081234567890", 
+            1000000, 
+            "BCA", 
+            "1234567890", 
+            "Rudi Hartono"
         };
-        pgatewayDonation = DonationFactory.createDonation("EWallet", ewalletParams);
+        bankTransferDonation = DonationFactory.createDonation("TransferBank", bankTransferParams);
     }
     
     private static void displayPrograms() {
@@ -95,19 +96,21 @@ public class MampuBantu {
         }
     }
     
-    private static void processEWalletDonations() {
-        if (pgatewayDonation != null) {
-            System.out.println("E-Wallet Donations:");
+    private static void processBankTransferDonations() {
+        if (bankTransferDonation != null) {
+            System.out.println("Bank Transfer Donations:");
+            System.out.println(bankTransferDonation.toString());
             
             Object[] customDonationParams = new Object[]{
-                "Maya", 
-                "maya@mail.com", 
-                "081122334455", 
-                750000, 
-                "OVO", 
-                "081122334455"
+                "Andi", 
+                "andi@mail.com", 
+                "087654321098", 
+                1500000, 
+                "Mandiri", 
+                "9876543210", 
+                "Andi Wijaya"
             };
-            Donation customDonation = DonationFactory.createDonation("EWallet", customDonationParams);
+            Donation customDonation = DonationFactory.createDonation("TransferBank", customDonationParams);
             
             System.out.println("\nAdding custom donation:");
             System.out.println(customDonation.toString());
@@ -115,13 +118,36 @@ public class MampuBantu {
             incomeRecords.add(new FinancialReportImpl(
                 "INC003", 
                 "2025-03-28", 
-                750000, 
-                "E-Wallet Donation from Maya", 
+                1500000, 
+                "Bank Transfer Donation from Andi", 
                 activityProgram, 
                 "INC-003"
             ));
+            
+            Object[] anotherDonationParams = new Object[]{
+                "Lina", 
+                "lina@mail.com", 
+                "089876543210", 
+                750000, 
+                "BNI", 
+                "5432109876", 
+                "Lina Susanti"
+            };
+            Donation anotherDonation = DonationFactory.createDonation("TransferBank", anotherDonationParams);
+            
+            System.out.println("\nAdding another donation:");
+            System.out.println(anotherDonation.toString());
+            
+            incomeRecords.add(new FinancialReportImpl(
+                "INC004", 
+                "2025-03-28", 
+                750000, 
+                "Bank Transfer Donation from Lina", 
+                operationalProgram, 
+                "INC-004"
+            ));
         } else {
-            System.out.println("E-Wallet payment gateway not properly initialized.");
+            System.out.println("Bank Transfer payment gateway not properly initialized.");
         }
     }
     
